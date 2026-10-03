@@ -1,0 +1,28 @@
+.scene_container {
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+}
+
+.scene {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	width: 50%;
+	max-width: 450px;
+	// vh?
+	// height: 75vh;
+	height: 400px;
+
+	text-align: left;
+	
+	@media screen and (max-width: 600px) {
+		width: 85%;
+		max-width: auto;
+	}
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Moon Bounce - Safe Word</title>
+		<link href="https://fonts.googleapis.com/css?family=Cousine:400,700" rel="stylesheet">
+		<link rel='stylesheet' href='/css/style.css' />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+		<meta property="og:image" content="http://safeword.grindselect.com/images/safeword_cover.jpg"/>
+		<meta property="og:title" content="Moon Bounce - Safe Word"/>
+		<meta property="og:url" content="http://safeword.grindselect.com"/>
+		<meta property="og:site_name" content="Moon Bounce - Safe Word"/>
+		<meta property="og:description" content="Sing along to the single Safe Word by Moon Bounce"/>
+		<meta name="description" content="Sing along to the single Safe Word by Moon Bounce" />
+		<link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16" />
+
+	</head>
+	<body>
+		<div class="safeword loading">
+			<!-- this gets animated left by 100vw increments -->
+			<div class="karaoke">
+				<div class="ball_gutter" data-size-me>
+					<!-- this bounces to positions without being concerned about the viewport -->
+					<div class="ball"></div>
+				</div>
+				<div class="sentences" data-size-me></div>
+			</div>
+			<!-- <div class="sound_toggle" data-sound-toggle></div> -->
+			<div class="credits">
+				<div class="credit_scroller">
+					<div class="credit start"></div><div class="credit c-0"></div><div class="credit c-0"><span>You are singing along to "Safe Word"</span></div><div class="credit c-0"></div><div class="credit c-1"></div><div class="credit c-1"><span>Written and Produced by "Moon Bounce"</span></div><div class="credit c-1"></div><div class="credit c-2"></div><div class="credit c-2"><span>&copy;2017 Grind Select</span></div><div class="credit c-2"></div><div class="credit c-3"></div><div class="credit c-3"><span>The upcoming album "Clean House" can be purchased on <a href="https://grindselect.bandcamp.com/album/clean-house">Bandcamp</a></span></div><div class="credit c-3"></div><div class="credit c-4"></div><div class="credit c-4 bounce"><span>Tap on the Safe Word logo to enjoy a new take on this classic tune</span></div><div class="credit c-4"></div><div class="credit c-5"></div><div class="credit c-5"><span>Get ready!</span></div><div class="credit c-5"></div>
+				</div>
+			</div>
+		</div>
+		<div class="home">
+			<!-- split screen -->
+			<div class="left">
+				<div class="text_bottom">An Evening of Karaoke</div>
+			</div>
+			<div class="right">
+				<div class="start_ball_container">
+					<div class="start_indicator loading">
+						<div class="start_indicator_loading">Loading...<br/></div>
+						<div class="start_indicator_loaded">
+							Click the ball<br/>to begin
+						</div>
+					</div>
+					<div class="start_ball loading"></div>
+				</div>
+				<div class="text_bottom">by Moon Bounce</div>
+			</div>
+			<div class="home-redeem" data-go-to-redeem>
+				Have an LP download code? Click here to redeem it.
+			</div>
+		</div>
+		<div class="thanks">
+			<h3>Thank you for singing along to "Safe Word" by "Moon Bounce"</h3>
+			<p>Order the LP on <a href="https://grindselect.bandcamp.com/album/clean-house">Bandcamp</a></p>
+		</div>
+		<div class="home home-2">
+			<div class="left"></div>
+			<div class="right">
+				<h3 data-feedback>Enter your download code</h3>
+				<div class="redeem" data-redeem>
+					<input type="text" data-redeem-input placeholder="ABCDEF" /><button data-redeem-submit>Submit</button>
+				</div>
+			</div>
+		</div>
+		<div class="logo large" data-sound-toggle></div>
+		<script src="/js/build/libs.min.js"></script>
+		<script src="/js/build/site.min.js"></script>
+	</body>
+</html>

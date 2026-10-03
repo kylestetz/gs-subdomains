@@ -1,0 +1,68 @@
+@import 'fonts.less';
+@import 'form.less';
+@import 'scene.less';
+@import 'progress_bar.less';
+@import 'download.less';
+
+@active_color: #FFFB3E;
+@light-gray: #b6bac6;
+@gray: #a1a5b2;
+@dark: #383436;
+@background: #484447;
+@text: #e4e5e6;
+
+* {
+	box-sizing: border-box;
+}
+
+body,html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: @background;
+	overflow: hidden;
+	font-family: "Averia Serif Libre", "Georgia", serif;
+	letter-spacing: 1px;
+	font-size: 18px;
+	color: @text;
+	-webkit-font-smoothing: antialiased;
+	transition: background-color 30s;
+}
+
+a {
+	color: white;
+}
+
+#canvas {
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	pointer-events: none;
+	z-index: 100;
+	opacity: 0.5;
+	transition: opacity 10s;
+}
+
+.app {
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+}
+
+&.hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.display_none {
+	display: none;
+}
+
+.noselect {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

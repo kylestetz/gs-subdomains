@@ -1,0 +1,105 @@
+.form {
+	// position: absolute;
+	// top: 66vh;
+	// width: 50%;
+	max-width: 450px;
+	margin: 0 auto;
+	// transform: translateY(-50%);
+	opacity: 0;
+	transition: opacity 0.75s;
+	text-align: center;
+	
+	&.fade-in {
+		opacity: 1;
+	}
+}
+ 
+input[type=text] {
+	text-align: center;
+	outline: none;
+	border: none;
+	padding: 0.5rem;
+	border-bottom: 2px solid @text;
+	background-color: transparent;
+	font-family: "Averia Serif Libre";
+	font-size: 18px;
+	letter-spacing: 1px;
+	color: @text;
+}
+
+input[type=radio] {
+	margin-right: 1em;
+}
+
+label {
+	display: block;
+	margin-bottom: 0.5em;
+	letter-spacing: auto;
+	&.glitch {
+		font-family: monospace !important;
+		font-style: italic !important;
+		transition: letter-spacing 0.4s;
+		letter-spacing: -10px;
+	}
+}
+
+button {
+	display: block;
+	margin: 0 auto;
+	margin-top: 2em;
+	position: relative;
+	z-index: 1;
+	transition: all 0.5s;
+	letter-spacing: 0px;
+	outline: none;
+	
+	padding: 0.5em 1em;
+	border: 2px solid @text;
+	border-radius: 2px;
+	color: @text;
+	font-family: "Averia Serif Libre";
+	font-size: 14px;
+	letter-spacing: 1px;
+	background-color: transparent;
+	cursor: pointer;
+
+	// &.start {
+	// 	box-shadow: 0 0 12px rgba(0,0,0,0);
+	// 	&:hover {
+	// 		letter-spacing: 1em;
+	// 		box-shadow: 30px 30px 12px rgba(0,0,0, 0.5);
+	// 	}
+	// 	&:focus {
+	// 		box-shadow: 30px 30px 12px rgba(0,0,0, 0.5);
+	// 	}
+	// }
+
+	&.scene1 {
+		// background-color: 
+	}
+}
+
+.error {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	left: 0;
+	background-color: white;
+	color: red;
+	padding: 1em;
+	opacity: 1;
+	transition: opacity 0.75s;
+	font-family: monospace;
+	text-align: center;
+
+	&.fade {
+		opacity: 0;
+	}
+}
+
+.red { color: red; }
+.orange { color: orange; }
+.yellow { color: yellow; }
+.green { color: green; }
+.blue { color: blue; }
+.purple { color: purple; }

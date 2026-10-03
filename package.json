@@ -1,0 +1,31 @@
+{
+  "name": "gs-code-factory",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Download-code redemption sites for Grind Select records, served from a single backend.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "dev": "node --watch --env-file-if-exists=.env server/index.js",
+    "build": "node scripts/build.js",
+    "build:watch": "node scripts/build.js --watch",
+    "migrate": "node --env-file-if-exists=.env scripts/migrate.js",
+    "codes": "node --env-file-if-exists=.env scripts/codes.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.7.0"
+  },
+  "devDependencies": {
+    "baconjs": "^0.7.95",
+    "esbuild": "^0.28.2",
+    "jquery": "^3.7.1",
+    "less": "^4.9.1",
+    "lodash": "^4.18.1",
+    "virtual-dom": "^2.1.1"
+  }
+}

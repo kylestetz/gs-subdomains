@@ -1,0 +1,13 @@
+:root {
+	--bg: #333333;
+	--text: #bebebe;
+	--text-shadow: 0.5px 0.5px 0px rgba(0,0,0,1);
+	--link: #a1865b;
+	--title: white;
+	--subtitle: #bebebe;
+	--input: #bebebe;
+	--input-border: #a1a9ad;
+	--placeholder: rgb(190, 190, 190, 0.25);
+	--submit-bg: #bebebe;
+	--download-link: #bebebe;
+}

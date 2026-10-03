@@ -1,0 +1,43 @@
+// .sound_toggle {
+// 	position: fixed;
+// 	top: 20px;
+// 	right: 20px;
+// 	// transform: translate(-50%, -50%);
+// 	padding: 0.5rem 0.75rem;
+// 	cursor: pointer;
+// 	.noselect;
+// 	font-size: 20px;
+// 	border: 2px solid @ball;
+// 	border-radius: 4px;
+
+// 	color: @ball;
+// 	// &:hover { text-decoration: underline; }
+	
+// 	// button version
+// 	// background-color: @ball;
+// 	// color: white;
+// }
+
+.sound_toggle {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+
+	width: 50px;
+	height: 50px;
+
+	background-image: url('/images/mic-01.png');
+	background-size: 50px 50px;
+	background-repeat: no-repeat;
+
+	border-radius: 100%;
+	background-color: @ball;
+
+	cursor: pointer;
+	
+
+	.dark & {
+		background-color: @orange;
+	}
+	
+}

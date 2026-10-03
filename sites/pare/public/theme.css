@@ -1,0 +1,11 @@
+:root {
+	--bg: #031b25;
+	--text: #a1a9ad;
+	--link: #a1865b;
+	--title: #9bba8d;
+	--subtitle: #778f6c;
+	--input: #a1a9ad;
+	--placeholder: rgb(161, 169, 173, 0.25);
+	--submit-bg: #a1a9ad;
+	--download-link: #a1a9ad;
+}

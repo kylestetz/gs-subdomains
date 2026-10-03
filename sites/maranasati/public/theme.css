@@ -1,0 +1,13 @@
+:root {
+	--bg: #c4eae7;
+	--text: #137b79;
+	--text-shadow: 0.5px 0.5px 0 #fff;
+	--link: #a1865b;
+	--title: #ec764b;
+	--subtitle: #f19a6b;
+	--input: #137b79;
+	--placeholder: rgba(19, 123, 121, 0.25);
+	--submit-bg: #ec764b;
+	--submit-text: white;
+	--download-link: #137b79;
+}

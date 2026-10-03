@@ -1,0 +1,28 @@
+node_modules/
+.env
+.DS_Store
+
+# Album ZIPs handed out for valid codes (see DOWNLOADS_DIR)
+/downloads/
+
+# Full-length audio for the slagroom and safeword experiences
+sites/*/public/audio/
+
+# Build output (npm run build)
+sites/*/public/js/build/
+sites/*/public/css/style.css
+
+# Database dumps contain every download code
+dump-*.zip
+dump-*/
+
+# The old per-album repos, kept around until cutover
+/abag_troubleshooting/
+/abags/
+/cola/
+/nina_keith/
+/pb-mirage/
+/pb-pare/
+/pb_acchin_book/
+/safeword/
+/ss_fossilillies/

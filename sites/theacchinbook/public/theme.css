@@ -1,0 +1,12 @@
+:root {
+	--bg: #1d1e1f;
+	--text: #a1a9ad;
+	--link: #a1865b;
+	--title: #c6a775;
+	--subtitle: #a1865b;
+	--input: #a1a9ad;
+	--placeholder: rgb(161, 169, 173, 0.25);
+	--submit-bg: #a1a9ad;
+	--download-link: #a1a9ad;
+	--album-gap: 5rem;
+}

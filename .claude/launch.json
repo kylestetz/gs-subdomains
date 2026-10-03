@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "server",
+      "runtimeExecutable": "/Users/kylestetz/.nvm/versions/node/v24.21.0/bin/node",
+      "runtimeArgs": ["--watch", "--env-file-if-exists=.env", "server/index.js"],
+      "port": 3000,
+      "url": "http://cola.localhost:3000"
+    }
+  ]
+}

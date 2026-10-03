@@ -1,0 +1,16 @@
+:root {
+	--bg: #ecf0f3;
+	--text: #212121;
+	--text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.3);
+	--title: #b71212;
+	--subtitle: rgba(183, 18, 18, 0.66);
+	--input: #212121;
+	--placeholder: rgba(0, 0, 0, 0.25);
+	--submit-bg: white;
+	--download-link: #212121;
+	--album-gap: 5rem;
+}
+
+a {
+	text-decoration: underline;
+}

@@ -1,0 +1,69 @@
+.credits {
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+	z-index: 3;
+	.loading { pointer-events: none; }
+
+	opacity: 1;
+	transition: opacity 0.75s;
+	transition-delay: 0.5s;
+
+	&.go-away {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.credit_scroller {
+		height: 100vh;
+		transition: transform 0.5s;
+	}
+
+	.credit	{
+		display: inline-block;
+		vertical-align: top;
+		
+		width: 100vw;
+		height: 100%;
+		padding-top: ~"calc(50vh - 1rem)";
+		text-align: center;
+
+		a { color: white; }
+
+		&.start { background-color: #ededed; }
+		
+		// green
+		&.c-0 { background-color: #5fdcaa; color: white; }
+	
+		// dark gray
+		&.c-1 { background-color: #383436; color: white; }
+	
+		// purple
+		&.c-2 { background-color: #6b0abf; color: white; }
+	
+		// orange
+		&.c-3 { background-color: #f19951; color: white; }
+
+		@media screen and (max-height: 500px) and (max-width: 800px) {
+			padding-top: 75vh;
+			padding-left: 2rem;
+			padding-right: 2rem;
+		}
+	}
+
+	.credit.bounce span {
+		display: block;
+		position: relative;
+		-webkit-animation: 1s linear hop infinite;
+		animation: 1s linear hop infinite;
+		text-align: center;
+
+		&::before {
+			display: block;
+			content: '⬆';
+			position: absolute;
+			bottom: 110%;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+}

@@ -1,0 +1,68 @@
+.survey {
+	position: fixed;
+	top: 200px; right: 0; bottom: 0; left: 0;
+	padding: 2rem;
+
+	opacity: 1;
+	transition: opacity 0.75s;
+	transition-delay: 0.5s;
+
+	&.go-away {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+
+.survey_title {
+	display: none;
+	
+	text-align: center;
+	font-weight: normal;
+}
+
+.safe_words {
+	display: none;
+	
+	font-size: 20px;
+	text-align: justify;
+	
+	.word {
+		display: inline-block;
+		padding: 0.5rem 0.75rem;
+		border-radius: 4px;
+		color: @ball;
+		border: 2px solid @ball;
+		margin-right: 1rem;
+		margin-bottom: 0.5rem;
+
+		.noselect;
+		cursor: pointer;
+
+		&.selected {
+			background-color: @ball;
+			color: white;
+		}
+	}
+}
+
+.bop_container {
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	z-index: 2;
+}
+
+.bop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 1rem;
+	color: @orange;
+	width: 135px;
+	height: 135px;
+	padding-top: 3rem;
+	opacity: 0;
+	// border: 3px solid @orange;
+	border-radius: 100%;
+	text-align: center;
+	pointer-events: none;
+}

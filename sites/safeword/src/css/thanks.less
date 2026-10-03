@@ -1,0 +1,25 @@
+.thanks {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	max-width: 430px;
+	padding: 0.5rem;
+	transform: translate(-50%, -50%) scale(0.75);
+	z-index: 4;
+	text-align: center;
+
+	opacity: 0;
+	transition: opacity 1s, transform 1s;
+
+	&.show {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	a { color: #4a2f53; }
+
+	.dark & {
+		a { color: @ball; }
+	}
+}
