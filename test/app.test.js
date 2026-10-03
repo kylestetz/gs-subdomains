@@ -111,6 +111,19 @@ test('downloading straight from a link', async (t) => {
 	assert.equal(res.text, 'slagroom zip');
 	assert.equal((await collection.findOne({ code: 'SLAG01' })).count, 1);
 
+	// A browser that downloaded the file before asks "has it changed?". Answering
+	// 304 Not Modified to a download stalls the browser, so always send the file.
+	assert.equal(res.headers['cache-control'], 'no-store');
+	assert.equal(res.headers.etag, undefined);
+	assert.equal(res.headers['last-modified'], undefined);
+	const again = await send({
+		host: 'slagroom.localhost',
+		path: '/download/SLAG01',
+		headers: { 'if-none-match': '*', 'if-modified-since': new Date(Date.now() + HOUR).toUTCString() },
+	});
+	assert.equal(again.status, 200);
+	assert.equal(again.text, 'slagroom zip');
+
 	const missing = await send({ host: 'slagroom.localhost', path: '/download/NOPE00' });
 	assert.equal(missing.status, 404);
 	assert.match(missing.text, /doesn’t exist/);
@@ -123,6 +136,7 @@ test('handing the file transfer to nginx', async (t) => {
 	const res = await send({ host: 'cola.localhost', path: '/download/ABC123' });
 	assert.equal(res.status, 200);
 	assert.equal(res.text, '');
+	assert.equal(res.headers['cache-control'], 'no-store');
 	assert.equal(res.headers['x-accel-redirect'], '/_downloads/GS015-ABeaconSchool-Cola-(ExpandedVinylEdition).zip');
 	assert.match(res.headers['content-disposition'], /attachment; filename="GS015-ABeaconSchool-Cola-\(ExpandedVinylEdition\)\.zip"/);
 	assert.equal((await collection.findOne({ code: 'ABC123' })).count, 1);

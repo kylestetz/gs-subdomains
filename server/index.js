@@ -22,6 +22,9 @@ const app = createApp({
 const server = app.listen(config.port, () => {
 	console.log(`Serving ${albums.length} album sites on port ${config.port}`);
 	console.log(`  e.g. http://${albums[0].id}.localhost:${config.port}`);
+	console.log(config.accelRedirect
+		? `Downloads are sent by nginx (X-Accel-Redirect to ${config.accelRedirect})`
+		: `Downloads are sent by Node from ${config.downloadsDir} (set ACCEL_REDIRECT behind nginx)`);
 });
 
 for (const signal of ['SIGINT', 'SIGTERM']) {

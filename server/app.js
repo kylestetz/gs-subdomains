@@ -53,6 +53,9 @@ export function createApp({
 	const app = express();
 	app.set('trust proxy', trustProxy);
 	app.disable('x-powered-by');
+	// No ETags on downloads or API responses (static files keep theirs). This
+	// has to be app-wide: res.download ignores a per-call `etag: false`.
+	app.disable('etag');
 
 	const albumsById = new Map(albums.map((album) => [album.id, album]));
 	const sites = new Map(albums.map((album) => [album.id, express.static(path.join(sitesDir, album.id, 'public'))]));
@@ -108,6 +111,10 @@ export function createApp({
 			const result = await attempt(req, req.params.code, { dryRun: req.method === 'HEAD' });
 			if (result !== 'ok') return res.status(STATUS[result]).type('text').send(MESSAGES[result]);
 
+			// Each download is gated by a code, so never let a browser revalidate a
+			// cached copy: a 304 in answer to a download stalls the browser.
+			res.set('Cache-Control', 'no-store');
+
 			// Behind nginx, hand the file transfer to nginx (see README).
 			if (accelRedirect) {
 				res.attachment(req.album.download);
@@ -115,7 +122,10 @@ export function createApp({
 				return res.end();
 			}
 
-			res.download(downloadPath(req.album), req.album.download, (err) => {
+			for (const header of ['if-match', 'if-none-match', 'if-modified-since', 'if-unmodified-since']) {
+				delete req.headers[header];
+			}
+			res.download(downloadPath(req.album), req.album.download, { cacheControl: false, lastModified: false }, (err) => {
 				if (err && !res.headersSent) next(err);
 			});
 		} catch (err) {

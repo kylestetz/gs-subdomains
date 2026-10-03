@@ -29,7 +29,7 @@ export function insertCode(collection, album, code, extra = {}) {
 }
 
 // fetch() can't set the Host header, which the app routes on.
-export function request(port, { host, method = 'GET', path = '/', body }) {
+export function request(port, { host, method = 'GET', path = '/', body, headers = {} }) {
 	return new Promise((resolve, reject) => {
 		const req = http.request({
 			port,
@@ -38,6 +38,7 @@ export function request(port, { host, method = 'GET', path = '/', body }) {
 			headers: {
 				host: `${host}:${port}`,
 				...(body && { 'content-type': 'application/json' }),
+				...headers,
 			},
 		}, (res) => {
 			const chunks = [];
