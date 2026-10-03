@@ -105,8 +105,8 @@ to read off a card.
 3. Put the ZIP in `downloads/`.
 4. `npm run codes -- generate <id> 1000 > codes.txt` and send `codes.txt` to the
    printer.
-5. Point `<id>.grindselect.com` at the server and add the id to the nginx
-   `server_name` (see below).
+5. Add the id to `server_name` in `deploy/nginx.conf` (`npm test` fails until
+   you do), and point `<id>.grindselect.com` at the server.
 
 ## Deploying
 
@@ -131,43 +131,16 @@ in its environment. nginx serves the sites as static files and sends only code
 requests to Node. Node checks the code and replies with an `X-Accel-Redirect`
 header, then nginx sends the ZIP itself. Node never serves a file in production.
 
-This config assumes the repo is checked out at `/srv/gs-code-factory`:
+The nginx config is [`deploy/nginx.conf`](deploy/nginx.conf). It assumes the
+repo is checked out at `/var/www/gs-subdomains`. Symlink it into nginx so a
+`git pull` picks up changes:
 
-```nginx
-server {
-	listen 80;
-	server_name ~^(?<album>cola|fossilillies|maranasati|mirage|pare|safeword|slagroom|theacchinbook|troubleshooting)\.grindselect\.com$;
-
-	root /srv/gs-code-factory/sites/$album/public;
-
-	location /shared/ {
-		root /srv/gs-code-factory/sites;
-	}
-
-	# Code redemption and downloads go to Node. `/download/.` needs at least one
-	# character after the slash, so slagroom's /download/ code page stays static.
-	location ~ ^/(api/|download/.) {
-		client_max_body_size 1k;
-		proxy_pass http://127.0.0.1:3000;
-		proxy_set_header Host $host;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-	}
-
-	# Where the X-Accel-Redirect from Node points. `internal` means it can't be
-	# requested directly. Must match DOWNLOADS_DIR.
-	location /_downloads/ {
-		internal;
-		alias /srv/gs-code-factory/downloads/;
-	}
-
-	location / {
-		try_files $uri $uri/ =404;
-	}
-}
+```bash
+sudo ln -s /var/www/gs-subdomains/deploy/nginx.conf /etc/nginx/sites-enabled/gs-subdomains.conf
+sudo nginx -t && sudo systemctl reload nginx
 ```
 
-To add an album, add its id to the `server_name` list as well.
+After pulling changes to it, run `sudo nginx -t && sudo systemctl reload nginx` again.
 
 The app trusts `X-Forwarded-*` headers from loopback only (`TRUST_PROXY`), so the
 rate limit sees each buyer's real IP behind nginx. Without `ACCEL_REDIRECT`

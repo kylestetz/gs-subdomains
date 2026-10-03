@@ -40,6 +40,12 @@ test('every album has a site', () => {
 	}
 });
 
+test('nginx serves every album', () => {
+	const conf = fs.readFileSync(path.join(import.meta.dirname, '../deploy/nginx.conf'), 'utf8');
+	const [, names] = conf.match(/server_name ~\^\(\?<album>([^)]+)\)/);
+	assert.deepEqual(names.split('|').sort(), albums.map((album) => album.id).sort());
+});
+
 test('sites are served by subdomain', async (t) => {
 	const { send } = await startApp(t);
 
