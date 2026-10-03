@@ -16,6 +16,7 @@ const app = createApp({
 	sitesDir: config.sitesDir,
 	downloadsDir: config.downloadsDir,
 	trustProxy: config.trustProxy,
+	accelRedirect: config.accelRedirect,
 });
 
 const server = app.listen(config.port, () => {

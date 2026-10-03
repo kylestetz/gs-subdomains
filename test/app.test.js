@@ -9,7 +9,7 @@ import { createApp, createFailureLimiter } from '../server/app.js';
 import { createCodes } from '../server/codes.js';
 import { connectTestDb, insertCode, request, HOUR } from './helpers.js';
 
-async function startApp(t, { limiter } = {}) {
+async function startApp(t, { limiter, accelRedirect } = {}) {
 	const collection = await connectTestDb(t);
 	const downloadsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gs-downloads-'));
 	fs.writeFileSync(path.join(downloadsDir, 'GS015-ABeaconSchool-Cola-(ExpandedVinylEdition).zip'), 'cola zip');
@@ -20,6 +20,7 @@ async function startApp(t, { limiter } = {}) {
 		albums,
 		sitesDir: config.sitesDir,
 		downloadsDir,
+		accelRedirect,
 		...(limiter && { limiter }),
 	});
 	const server = app.listen(0);
@@ -107,6 +108,22 @@ test('downloading straight from a link', async (t) => {
 	const missing = await send({ host: 'slagroom.localhost', path: '/download/NOPE00' });
 	assert.equal(missing.status, 404);
 	assert.match(missing.text, /doesn’t exist/);
+});
+
+test('handing the file transfer to nginx', async (t) => {
+	const { collection, send } = await startApp(t, { accelRedirect: '/_downloads/' });
+	await insertCode(collection, 'cola', 'ABC123');
+
+	const res = await send({ host: 'cola.localhost', path: '/download/ABC123' });
+	assert.equal(res.status, 200);
+	assert.equal(res.text, '');
+	assert.equal(res.headers['x-accel-redirect'], '/_downloads/GS015-ABeaconSchool-Cola-(ExpandedVinylEdition).zip');
+	assert.match(res.headers['content-disposition'], /attachment; filename="GS015-ABeaconSchool-Cola-\(ExpandedVinylEdition\)\.zip"/);
+	assert.equal((await collection.findOne({ code: 'ABC123' })).count, 1);
+
+	const missing = await send({ host: 'cola.localhost', path: '/download/NOPE00' });
+	assert.equal(missing.status, 404);
+	assert.equal(missing.headers['x-accel-redirect'], undefined);
 });
 
 test('codes are not used up when the album file is missing', async (t) => {

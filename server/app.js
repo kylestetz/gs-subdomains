@@ -47,6 +47,7 @@ export function createApp({
 	sitesDir,
 	downloadsDir,
 	trustProxy = 'loopback',
+	accelRedirect = null,
 	limiter = createFailureLimiter({ max: 20, windowMs: 10 * 60 * 1000 }),
 }) {
 	const app = express();
@@ -106,6 +107,14 @@ export function createApp({
 			// HEAD requests (link previews, download managers) never use up a code.
 			const result = await attempt(req, req.params.code, { dryRun: req.method === 'HEAD' });
 			if (result !== 'ok') return res.status(STATUS[result]).type('text').send(MESSAGES[result]);
+
+			// Behind nginx, hand the file transfer to nginx (see README).
+			if (accelRedirect) {
+				res.attachment(req.album.download);
+				res.set('X-Accel-Redirect', accelRedirect + encodeURI(req.album.download));
+				return res.end();
+			}
+
 			res.download(downloadPath(req.album), req.album.download, (err) => {
 				if (err && !res.headersSent) next(err);
 			});

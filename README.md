@@ -105,7 +105,8 @@ to read off a card.
 3. Put the ZIP in `downloads/`.
 4. `npm run codes -- generate <id> 1000 > codes.txt` and send `codes.txt` to the
    printer.
-5. Point `<id>.grindselect.com` at the server (see below).
+5. Point `<id>.grindselect.com` at the server and add the id to the nginx
+   `server_name` (see below).
 
 ## Deploying
 
@@ -125,30 +126,52 @@ npm prune --omit=dev
 npm start
 ```
 
-Run it as a single service (systemd, pm2, …) on one port, and route every album
-subdomain to it from nginx:
+Run it as a single service (systemd, pm2, …) with `ACCEL_REDIRECT=/_downloads/`
+in its environment. nginx serves the sites as static files and sends only code
+requests to Node. Node checks the code and replies with an `X-Accel-Redirect`
+header, then nginx sends the ZIP itself. Node never serves a file in production.
+
+This config assumes the repo is checked out at `/srv/gs-code-factory`:
 
 ```nginx
 server {
 	listen 80;
-	server_name cola.grindselect.com fossilillies.grindselect.com
-		maranasati.grindselect.com mirage.grindselect.com pare.grindselect.com
-		safeword.grindselect.com slagroom.grindselect.com
-		theacchinbook.grindselect.com troubleshooting.grindselect.com;
+	server_name ~^(?<album>cola|fossilillies|maranasati|mirage|pare|safeword|slagroom|theacchinbook|troubleshooting)\.grindselect\.com$;
 
-	client_max_body_size 1k;
+	root /srv/gs-code-factory/sites/$album/public;
 
-	location / {
+	location /shared/ {
+		root /srv/gs-code-factory/sites;
+	}
+
+	# Code redemption and downloads go to Node. `/download/.` needs at least one
+	# character after the slash, so slagroom's /download/ code page stays static.
+	location ~ ^/(api/|download/.) {
+		client_max_body_size 1k;
 		proxy_pass http://127.0.0.1:3000;
 		proxy_set_header Host $host;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header X-Forwarded-Proto $scheme;
 	}
+
+	# Where the X-Accel-Redirect from Node points. `internal` means it can't be
+	# requested directly. Must match DOWNLOADS_DIR.
+	location /_downloads/ {
+		internal;
+		alias /srv/gs-code-factory/downloads/;
+	}
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
 }
 ```
 
+To add an album, add its id to the `server_name` list as well.
+
 The app trusts `X-Forwarded-*` headers from loopback only (`TRUST_PROXY`), so the
-rate limit sees each buyer's real IP behind nginx.
+rate limit sees each buyer's real IP behind nginx. Without `ACCEL_REDIRECT`
+(as in development), Node serves the sites and files itself.
 
 ### Cutover
 
